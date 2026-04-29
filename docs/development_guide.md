@@ -100,11 +100,14 @@ cd frontend
 # Install dependencies
 npm install
 
+# Optional: see frontend/api-env.sample for REACT_APP_API_URL
 # Start the development server
 npm start
 ```
 
-The frontend application will be available at `http://localhost:3001`
+The Create React App dev server listens at **`http://localhost:3000`** by default.
+
+**API requests:** `frontend/package.json` defines **`proxy`** to `http://localhost:3010` so the UI can call **`/candidates`** and **`/upload`** with relative URLs when **`REACT_APP_API_URL` is unset**. To target another URL explicitly, set **`REACT_APP_API_URL`** (see `frontend/api-env.sample`). With a full URL, ensure the backend allows that origin (**CORS**) or use the proxy approach.
 
 ### 6. Cypress Testing Suite Setup
 
@@ -112,13 +115,10 @@ The frontend application will be available at `http://localhost:3001`
 # From the frontend directory
 cd frontend
 
-# Install Cypress (if not already installed)
-npm install
-
-# Open Cypress Test Runner (Interactive)
+# Open Cypress Test Runner (interactive)
 npm run cypress:open
 
-# Or run tests headlessly
+# Or run tests headlessly (requires `npm start` in another terminal unless stubs only)
 npm run cypress:run
 ```
 
@@ -145,6 +145,9 @@ npm run test:coverage
 
 ```bash
 cd frontend
+
+# Run unit tests (non-watch; configured via jest.config.js)
+npm test -- --watchAll=false
 
 # Run unit tests
 npm test
